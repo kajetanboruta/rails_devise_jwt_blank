@@ -14,6 +14,7 @@ class ProductsController < ApplicationController
   end
 
   def create
+    authorize Product
     @product = Product.new(product_params)
     if @product.save
       render json: @product
