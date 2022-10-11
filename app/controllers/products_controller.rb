@@ -1,4 +1,6 @@
 class ProductsController < ApplicationController
+  before_action :set_product, only: %i[ show edit update destroy ]
+
   def index
     @products = Product.all
 
@@ -13,12 +15,30 @@ class ProductsController < ApplicationController
 
   def create
     @product = Product.new(product_params)
-    render json: 'sorry, you can not create idea for someone else', status: :unprocessable_entity if current_user.is_admin?
-
     if @product.save
       render json: @product
     else
       render json: @product.errors, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    @product.destroy
+
+    if @product.destroyed?
+      render json: @product, status: :ok
+    else
+      render json: @product.errors, status: :bad_request
+    end
+  end
+
+  private
+
+  def set_product
+    @product = Product.find(params[:id])
+  end
+
+  def product_params
+    params.require(:product).permit(:name, :description, :image_url, :price)
   end
 end
