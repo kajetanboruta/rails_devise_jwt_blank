@@ -1,4 +1,7 @@
 class User < ApplicationRecord
+
+  enum role: [:enduser, :admin]
+
   devise :database_authenticatable,
          :jwt_authenticatable,
          :registerable,
