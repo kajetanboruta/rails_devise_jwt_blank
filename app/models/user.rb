@@ -1,5 +1,4 @@
 class User < ApplicationRecord
-
   enum role: [:enduser, :admin]
 
   devise :database_authenticatable,
@@ -7,5 +6,5 @@ class User < ApplicationRecord
          :registerable,
          jwt_revocation_strategy: JwtDenylist
 
-  has_many :products
+  has_many :orders
 end

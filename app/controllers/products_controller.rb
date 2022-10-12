@@ -16,6 +16,7 @@ class ProductsController < ApplicationController
   def create
     authorize Product
     @product = Product.new(product_params)
+
     if @product.save
       render json: @product
     else
@@ -24,6 +25,7 @@ class ProductsController < ApplicationController
   end
 
   def destroy
+    authorize Product
     @product.destroy
 
     if @product.destroyed?
